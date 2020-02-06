@@ -1,0 +1,17 @@
+.container {
+    height: 100vh;
+    display: grid;
+    grid-template-rows: 48px 1fr;
+
+    .header {
+        color: white;
+        background-color: #294E80;
+        line-height: 48px;
+        padding-left: 20px;
+        font-size: 20px;
+    }
+
+    .map {
+        background-color: #eee;
+    }
+}

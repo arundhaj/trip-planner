@@ -4,14 +4,28 @@
     grid-template-rows: 48px 1fr;
 
     .header {
+        display: flex;
         color: white;
         background-color: #294E80;
-        line-height: 48px;
-        padding-left: 20px;
+        padding-left: 10px;
         font-size: 20px;
+        align-items: center;
+    }
+
+    .content {
+        min-width: 1200px;
+        display: grid;
+        grid-template-columns: 20% 80%;
+        overflow: hidden;
+    }
+
+    .menu {
+        overflow: auto;
+        background-color: #eee;
     }
 
     .map {
         background-color: #eee;
     }
+
 }

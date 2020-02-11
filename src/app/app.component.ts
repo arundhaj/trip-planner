@@ -1,10 +1,6 @@
 import { Component, ViewChild, OnInit } from '@angular/core';
 
-import { Map, View } from 'ol';
-import TileLayer from 'ol/layer/Tile';
-import OSM from 'ol/source/OSM';
-// import { fromLonLat } from 'ol/proj';
-import * as olProj from 'ol/proj';
+import { MapInfoWindow, MapMarker } from '@angular/google-maps';
 
 @Component({
   selector: 'app-root',
@@ -14,23 +10,30 @@ import * as olProj from 'ol/proj';
 export class AppComponent implements OnInit {
   title = 'trip-planner';
 
-  latitude = 18.5204;
-  longitude = 73.8567;
+  @ViewChild(MapInfoWindow, {static: false}) infoWindow: MapInfoWindow;
 
-  map: any;
+  center = { lat: 12.931832806450556, lng: 77.74196197781967 }; // {lat: 18.5204, lng: 73.8567};
+  markerOptions = {draggable: false};
+  markerPositions: google.maps.LatLngLiteral[] = [];
+  zoom = 10;
+  display?: google.maps.LatLngLiteral;
 
   ngOnInit() {
-    this.map = new Map({
-      target: 'map',
-      layers: [
-        new TileLayer({
-          source: new OSM()
-        })
-      ],
-      view: new View({
-        center: olProj.fromLonLat([77.580643, 12.972442]), // ol.proj.fromLonLat([73.8567, 18.5204]),
-        zoom: 8
-      })
-    });
+  }
+
+  addMarker(event: google.maps.MouseEvent) {
+    this.markerPositions.push(event.latLng.toJSON());
+  }
+
+  move(event: google.maps.MouseEvent) {
+    this.display = event.latLng.toJSON();
+  }
+
+  openInfoWindow(marker: MapMarker) {
+    this.infoWindow.open(marker);
+  }
+
+  removeLastMarker() {
+    this.markerPositions.pop();
   }
 }

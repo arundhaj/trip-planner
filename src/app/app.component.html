@@ -4,7 +4,15 @@
   </div>
   <div class="content">
     <div class="menu">
+      {{ display | json }}
     </div>
-    <div id="map" class="map"></div>
+    <div id="map" class="map">
+      <google-map height="100%" width="100%" [center]="center" [zoom]="zoom" (mapClick)="addMarker($event)"
+        (mapMousemove)="move($event)" (mapRightclick)="removeLastMarker()">
+        <map-marker #marker *ngFor="let markerPosition of markerPositions" [position]="markerPosition"
+          [options]="markerOptions" (mapClick)="openInfoWindow(marker)"></map-marker>
+        <map-info-window>Info Window content</map-info-window>
+      </google-map>
+    </div>
   </div>
 </div>

@@ -1,6 +1,6 @@
 # Trip Planner
 
-:cloud: Trip Planner created to experiment with [Angular](https://angular.io), [Angular Material](https://material.angular.io) and Google Maps
+:earth_asia: :sunrise_over_mountains: Trip Planner created to experiment with [Angular](https://angular.io), [Angular Material](https://material.angular.io) and Google Maps
 
 
 &nbsp;

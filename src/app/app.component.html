@@ -4,14 +4,47 @@
   </div>
   <div class="content">
     <div class="menu">
-      {{ display | json }}
+      <div *ngIf="!selectedTrip">
+        <div style="margin: 10px 10px 0 10px;">
+          <h2 style="padding-top: 5px;">My Trips</h2>
+        </div>
+        <mat-action-list>
+          <button mat-list-item *ngFor="let trip of tripList" (click)="loadTrip(trip)">{{ trip.name }}</button>
+        </mat-action-list>
+      </div>
+      <div *ngIf="selectedTrip">
+        <div style="margin: 10px 10px 0 10px;">
+          <button mat-raised-button style="float: right;" (click)="loadTripList()">
+            <mat-icon>keyboard_backspace</mat-icon>
+            Back
+          </button>
+          <h2 style="padding-top: 5px;">{{selectedTrip.name}}</h2>
+        </div>
+        <mat-action-list>
+          <button mat-list-item *ngFor="let spot of spotList">{{ spot.name }}</button>
+        </mat-action-list>
+      </div>
     </div>
     <div id="map" class="map">
       <google-map height="100%" width="100%" [center]="center" [zoom]="zoom" (mapClick)="addMarker($event)"
         (mapMousemove)="move($event)" (mapRightclick)="removeLastMarker()">
-        <map-marker #marker *ngFor="let markerPosition of markerPositions" [position]="markerPosition"
-          [options]="markerOptions" (mapClick)="openInfoWindow(marker)"></map-marker>
-        <map-info-window>Info Window content</map-info-window>
+        <map-marker #selectedMarker *ngIf="selectedTrip" [position]="selectedMarkerSpot" 
+          [options]="markerOptions" (mapClick)="openInfoWindow(selectedMarker)"></map-marker>
+        <map-marker #marker *ngFor="let spot of spotList" [position]="spot.latlng"
+          [options]="markerOptions" (mapClick)="openInfoWindow(marker, spot)"></map-marker>
+        <map-info-window>
+          <div style="padding: 10px;">
+            <div>
+              <h2>Spot</h2>
+              <mat-form-field>
+                <mat-label>Name</mat-label>
+                <input matInput placeholder="Name" [(ngModel)]="selectedSpot.name">
+              </mat-form-field>
+            </div>
+            <button mat-raised-button color="primary" *ngIf="selectedSpot.id"><mat-icon>save</mat-icon> Save</button>
+            <button mat-raised-button color="primary" *ngIf="!selectedSpot.id"><mat-icon>add_location</mat-icon>Add</button>
+          </div>
+        </map-info-window>
       </google-map>
     </div>
   </div>
